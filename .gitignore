@@ -1,0 +1,15 @@
+*.settings
+*.classpath
+*.project
+*.class
+*.log
+*.DS_Store
+*.iml
+
+/target/
+/.idea/
+*/target/
+
+*/soa-backup/
+
+*/node_modules/
