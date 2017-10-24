@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiying.hu.mapper.ProjectMapper">
+    <resultMap id="BaseResultMap" type="com.baiying.hu.entity.Project">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="project_name" property="projectName" jdbcType="VARCHAR"/>
+        <result column="project_detail" property="projectDetail" jdbcType="VARCHAR"/>
+        <result column="publisher_id" property="publisherId" jdbcType="VARCHAR"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="phone" property="phone" jdbcType="VARCHAR"/>
+        <result column="business_id" property="businessId" jdbcType="VARCHAR"/>
+        <result column="budget" property="budget" jdbcType="VARCHAR"/>
+        <result column="price" property="price" jdbcType="VARCHAR"/>
+        <result column="city_id" property="cityId" jdbcType="VARCHAR"/>
+        <result column="project_index" property="projectIndex" jdbcType="INTEGER"/>
+        <result column="service_id" property="serviceId" jdbcType="BIGINT"/>
+        <result column="consultant_id" property="consultantId" jdbcType="BIGINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, project_name, project_detail, publisher_id, status, created_at, updated_at, phone, 
+    business_id, city_id, project_index,budget,price,consultant_id,service_id
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baiying.hu.entity.ProjectExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_davince_project
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_davince_project
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_davince_project
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.baiying.hu.entity.ProjectExample">
+        delete from t_davince_project
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.baiying.hu.entity.Project">
+    insert into t_davince_project (project_name, project_detail,
+      publisher_id, status,phone, business_id,
+      city_id,budget
+      )
+    values (#{projectName,jdbcType=VARCHAR}, #{projectDetail,jdbcType=VARCHAR},
+      #{publisherId,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, #{phone,jdbcType=VARCHAR}, #{businessId,jdbcType=VARCHAR},
+      #{cityId,jdbcType=VARCHAR},#{budget}
+      )
+  </insert>
+    <insert id="insertSelective" parameterType="com.baiying.hu.entity.Project">
+        insert into t_davince_project
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="projectName != null">
+                project_name,
+            </if>
+            <if test="projectDetail != null">
+                project_detail,
+            </if>
+            <if test="publisherId != null">
+                publisher_id,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="phone != null">
+                phone,
+            </if>
+            <if test="businessId != null">
+                business_id,
+            </if>
+            <if test="cityId != null">
+                city_id,
+            </if>
+            <if test="projectIndex != null">
+                project_index,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="projectName != null">
+                #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectDetail != null">
+                #{projectDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="publisherId != null">
+                #{publisherId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="phone != null">
+                #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                #{businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="projectIndex != null">
+                #{projectIndex,jdbcType=INTEGER},
+            </if>
+            <if test="inviteCode != null">
+                #{inviteCode,jdbcType=VARCHAR},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.baiying.hu.entity.ProjectExample" resultType="java.lang.Integer">
+        select count(*) from t_davince_project
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_davince_project
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.projectName != null">
+                project_name = #{record.projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.projectDetail != null">
+                project_detail = #{record.projectDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="record.publisherId != null">
+                publisher_id = #{record.publisherId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.phone != null">
+                phone = #{record.phone,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessId != null">
+                business_id = #{record.businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.cityId != null">
+                city_id = #{record.cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="record.projectIndex != null">
+                project_index = #{record.projectIndex,jdbcType=INTEGER},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_davince_project
+        set id = #{record.id,jdbcType=BIGINT},
+        project_name = #{record.projectName,jdbcType=VARCHAR},
+        project_detail = #{record.projectDetail,jdbcType=VARCHAR},
+        publisher_id = #{record.publisherId,jdbcType=VARCHAR},
+        status = #{record.status,jdbcType=TINYINT},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+        phone = #{record.phone,jdbcType=VARCHAR},
+        business_id = #{record.businessId,jdbcType=VARCHAR},
+        city_id = #{record.cityId,jdbcType=VARCHAR},
+        project_index = #{record.projectIndex,jdbcType=INTEGER}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.baiying.hu.entity.Project">
+        update t_davince_project
+        <set>
+            <if test="projectName != null">
+                project_name = #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectDetail != null">
+                project_detail = #{projectDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="publisherId != null">
+                publisher_id = #{publisherId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="projectIndex != null">
+                project_index = #{projectIndex,jdbcType=INTEGER},
+            </if>
+            <if test="budget != null">
+                budget = #{budget},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.baiying.hu.entity.Project">
+    update t_davince_project
+    set project_name = #{projectName,jdbcType=VARCHAR},
+      project_detail = #{projectDetail,jdbcType=VARCHAR},
+      publisher_id = #{publisherId,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      phone = #{phone,jdbcType=VARCHAR},
+      business_id = #{businessId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      project_index = #{projectIndex,jdbcType=INTEGER}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+
+    <update id="editProjectInfo" parameterType="com.baiying.hu.entity.dto.ProjectEditDto">
+        update t_davince_project
+        <set>
+            <if test="projectName != null">
+                project_name = #{projectName,jdbcType=VARCHAR},
+            </if>
+            <if test="projectDetail != null">
+                project_detail = #{projectDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="publisherId != null">
+                publisher_id = #{publisherId,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="phone != null">
+                phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="businessId != null">
+                business_id = #{businessId,jdbcType=VARCHAR},
+            </if>
+            <if test="cityId != null">
+                city_id = #{cityId,jdbcType=VARCHAR},
+            </if>
+            <if test="serviceId!= null">
+                service_id = #{serviceId},
+            </if>
+            <if test="consultantId != null">
+                consultant_id = #{consultantId},
+            </if>
+            <if test="price!= null">
+                price = #{price}
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+</mapper>

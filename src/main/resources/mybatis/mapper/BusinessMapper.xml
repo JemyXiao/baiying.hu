@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiying.hu.mapper.BusinessMapper">
+    <resultMap id="BaseResultMap" type="com.baiying.hu.entity.Business">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="business_name" property="businessName" jdbcType="VARCHAR"/>
+        <result column="business_code" property="businessCode" jdbcType="BIGINT"/>
+        <result column="business_image" property="businessImage" jdbcType="VARCHAR"/>
+        <result column="business_detail" property="businessDetail" jdbcType="VARCHAR"/>
+        <result column="business_title" property="businessTitle" jdbcType="VARCHAR"/>
+        <result column="business_hot" property="businessHot" jdbcType="INTEGER"/>
+        <result column="parent_id" property="parentId" jdbcType="BIGINT"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, business_name, business_code, business_image, business_detail, business_title, 
+    business_hot, parent_id, created_at, updated_at, status
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baiying.hu.entity.BusinessExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_davince_business
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_davince_business
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_davince_business
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.baiying.hu.entity.BusinessExample">
+        delete from t_davince_business
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.baiying.hu.entity.Business">
+    insert into t_davince_business (business_name, business_code,
+      business_image, business_detail, business_title, 
+      business_hot, parent_id,status)
+    values (#{businessName,jdbcType=VARCHAR}, (SELECT nextval('service_seq')),
+      #{businessImage,jdbcType=VARCHAR}, #{businessDetail,jdbcType=VARCHAR}, #{businessTitle,jdbcType=VARCHAR}, 
+      #{businessHot,jdbcType=INTEGER}, #{parentId,jdbcType=BIGINT}, #{status,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.baiying.hu.entity.Business">
+        insert into t_davince_business
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="businessName != null">
+                business_name,
+            </if>
+            <if test="businessCode != null">
+                business_code,
+            </if>
+            <if test="businessImage != null">
+                business_image,
+            </if>
+            <if test="businessDetail != null">
+                business_detail,
+            </if>
+            <if test="businessTitle != null">
+                business_title,
+            </if>
+            <if test="businessHot != null">
+                business_hot,
+            </if>
+            <if test="parentId != null">
+                parent_id,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="businessName != null">
+                #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessCode != null">
+                #{businessCode,jdbcType=BIGINT},
+            </if>
+            <if test="businessImage != null">
+                #{businessImage,jdbcType=VARCHAR},
+            </if>
+            <if test="businessDetail != null">
+                #{businessDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="businessTitle != null">
+                #{businessTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="businessHot != null">
+                #{businessHot,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null">
+                #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.baiying.hu.entity.BusinessExample" resultType="java.lang.Integer">
+        select count(*) from t_davince_business
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_davince_business
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.businessName != null">
+                business_name = #{record.businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessCode != null">
+                business_code = #{record.businessCode,jdbcType=BIGINT},
+            </if>
+            <if test="record.businessImage != null">
+                business_image = #{record.businessImage,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessDetail != null">
+                business_detail = #{record.businessDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessTitle != null">
+                business_title = #{record.businessTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="record.businessHot != null">
+                business_hot = #{record.businessHot,jdbcType=INTEGER},
+            </if>
+            <if test="record.parentId != null">
+                parent_id = #{record.parentId,jdbcType=BIGINT},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_davince_business
+        set id = #{record.id,jdbcType=BIGINT},
+        business_name = #{record.businessName,jdbcType=VARCHAR},
+        business_code = #{record.businessCode,jdbcType=BIGINT},
+        business_image = #{record.businessImage,jdbcType=VARCHAR},
+        business_detail = #{record.businessDetail,jdbcType=VARCHAR},
+        business_title = #{record.businessTitle,jdbcType=VARCHAR},
+        business_hot = #{record.businessHot,jdbcType=INTEGER},
+        parent_id = #{record.parentId,jdbcType=BIGINT},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.baiying.hu.entity.Business">
+        update t_davince_business
+        <set>
+            <if test="businessName != null">
+                business_name = #{businessName,jdbcType=VARCHAR},
+            </if>
+            <if test="businessCode != null">
+                business_code = #{businessCode,jdbcType=BIGINT},
+            </if>
+            <if test="businessImage != null">
+                business_image = #{businessImage,jdbcType=VARCHAR},
+            </if>
+            <if test="businessDetail != null">
+                business_detail = #{businessDetail,jdbcType=VARCHAR},
+            </if>
+            <if test="businessTitle != null">
+                business_title = #{businessTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="businessHot != null">
+                business_hot = #{businessHot,jdbcType=INTEGER},
+            </if>
+            <if test="parentId != null and parentId > 0">
+                parent_id = #{parentId,jdbcType=BIGINT},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.baiying.hu.entity.Business">
+    update t_davince_business
+    set business_name = #{businessName,jdbcType=VARCHAR},
+      business_code = #{businessCode,jdbcType=BIGINT},
+      business_image = #{businessImage,jdbcType=VARCHAR},
+      business_detail = #{businessDetail,jdbcType=VARCHAR},
+      business_title = #{businessTitle,jdbcType=VARCHAR},
+      business_hot = #{businessHot,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=BIGINT},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+    <select id="queryBusinessByName" parameterType="string" resultType="com.baiying.hu.entity.Business">
+        SELECT child.id AS id,child.business_name AS businessName,child.business_code AS businessCode,
+        child.business_image AS businessImage,child.business_detail AS businessDetail,
+        child.business_title AS businessTitle
+        FROM t_davince_business child
+        INNER JOIN t_davince_business parent1
+        ON child.parent_id = parent1.id
+        INNER JOIN t_davince_business parent2
+        ON parent1.parent_id = parent2.id
+        WHERE 1=1
+        <if test="_parameter!=null and _parameter!=''">
+            and child.business_name LIKE CONCAT(CONCAT('%', #{_parameter}), '%')
+        </if>
+    </select>
+</mapper>

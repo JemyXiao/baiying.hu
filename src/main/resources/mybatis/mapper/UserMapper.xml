@@ -3,15 +3,21 @@
 <mapper namespace="com.baiying.hu.mapper.UserMapper">
     <resultMap id="BaseResultMap" type="com.baiying.hu.entity.User">
         <id column="id" property="id" jdbcType="BIGINT"/>
-        <result column="username" property="username" jdbcType="VARCHAR"/>
+        <result column="username" property="realName" jdbcType="VARCHAR"/>
         <result column="password" property="password" jdbcType="VARCHAR"/>
         <result column="token" property="token" jdbcType="VARCHAR"/>
         <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
         <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
         <result column="phone" property="phone" jdbcType="BIGINT"/>
         <result column="nick_name" property="nickName" jdbcType="VARCHAR"/>
-        <result column="city_id" property="cityId" jdbcType="INTEGER"/>
+        <result column="city_id" property="cityId" jdbcType="VARCHAR"/>
         <result column="status" property="status" jdbcType="VARCHAR"/>
+        <result column="service_provider" property="serviceProvider" jdbcType="INTEGER"/>
+        <result column="company_authenticate" property="companyAuthenticate" jdbcType="INTEGER"/>
+        <result column="business_id" property="businessId" jdbcType="VARCHAR"/>
+        <result column="id_card_photo" property="idCardPhoto" jdbcType="VARCHAR"/>
+        <result column="id_card" property="idCard" jdbcType="VARCHAR"/>
+        <result column="business_license_photo" property="businessLicensePhoto" jdbcType="VARCHAR"/>
     </resultMap>
     <sql id="Example_Where_Clause">
         <where>
@@ -77,12 +83,16 @@
     id, username, password, token, created_at, updated_at, phone, nick_name, city_id, 
     status
   </sql>
+    <sql id="Result_Column_List">
+        id,created_at, updated_at, phone, nick_name, city_id,
+        status,service_provider,company_authenticate,business_id,id_card_photo,business_license_photo
+    </sql>
     <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baiying.hu.entity.UserExample">
         select
         <if test="distinct">
             distinct
         </if>
-        <include refid="Base_Column_List"/>
+        <include refid="Result_Column_List"/>
         from t_davince_user
         <if test="_parameter != null">
             <include refid="Example_Where_Clause"/>
@@ -111,10 +121,10 @@
             keyProperty="id">
     insert into t_davince_user (username, password,
       token ,phone, nick_name, city_id,
-      status)
-    values (#{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
-      #{token,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{cityId,jdbcType=INTEGER},
-      #{status,jdbcType=VARCHAR})
+      status,business_id,id_card_photo,id_card,service_provider,business_license_photo,company_authenticate)
+    values (#{realName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+      #{token,jdbcType=VARCHAR}, #{phone,jdbcType=BIGINT}, #{nickName,jdbcType=VARCHAR}, #{cityId,jdbcType=VARCHAR},
+      #{status,jdbcType=VARCHAR},#{businessId},#{idCardPhoto},#{idCard},#{serviceProvider},#{businessLicensePhoto},#{companyAuthenticate})
   </insert>
     <insert id="insertSelective" parameterType="com.baiying.hu.entity.User">
         insert into t_davince_user
@@ -155,7 +165,7 @@
                 #{id,jdbcType=BIGINT},
             </if>
             <if test="username != null">
-                #{username,jdbcType=VARCHAR},
+                #{realName,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 #{password,jdbcType=VARCHAR},
@@ -176,7 +186,7 @@
                 #{nickName,jdbcType=VARCHAR},
             </if>
             <if test="cityId != null">
-                #{cityId,jdbcType=INTEGER},
+                #{cityId,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 #{status,jdbcType=VARCHAR},
@@ -195,8 +205,8 @@
             <if test="record.id != null">
                 id = #{record.id,jdbcType=BIGINT},
             </if>
-            <if test="record.username != null">
-                username = #{record.username,jdbcType=VARCHAR},
+            <if test="record.realName != null">
+                username = #{record.realName,jdbcType=VARCHAR},
             </if>
             <if test="record.password != null">
                 password = #{record.password,jdbcType=VARCHAR},
@@ -217,7 +227,7 @@
                 nick_name = #{record.nickName,jdbcType=VARCHAR},
             </if>
             <if test="record.cityId != null">
-                city_id = #{record.cityId,jdbcType=INTEGER},
+                city_id = #{record.cityId,jdbcType=VARCHAR},
             </if>
             <if test="record.status != null">
                 status = #{record.status,jdbcType=VARCHAR},
@@ -230,12 +240,12 @@
     <update id="updateByExample" parameterType="map">
         update t_davince_user
         set
-        username = #{record.username,jdbcType=VARCHAR},
+        username = #{record.realName,jdbcType=VARCHAR},
         password = #{record.password,jdbcType=VARCHAR},
         token = #{record.token,jdbcType=VARCHAR},
         phone = #{record.phone,jdbcType=BIGINT},
         nick_name = #{record.nickName,jdbcType=VARCHAR},
-        city_id = #{record.cityId,jdbcType=INTEGER},
+        city_id = #{record.cityId,jdbcType=VARCHAR},
         status = #{record.status,jdbcType=VARCHAR}
         <if test="_parameter != null">
             <include refid="Update_By_Example_Where_Clause"/>
@@ -244,8 +254,8 @@
     <update id="updateByPrimaryKeySelective" parameterType="com.baiying.hu.entity.User">
         update t_davince_user
         <set>
-            <if test="username != null">
-                username = #{username,jdbcType=VARCHAR},
+            <if test="realName != null">
+                username = #{realName,jdbcType=VARCHAR},
             </if>
             <if test="password != null">
                 password = #{password,jdbcType=VARCHAR},
@@ -266,7 +276,7 @@
                 nick_name = #{nickName,jdbcType=VARCHAR},
             </if>
             <if test="cityId != null">
-                city_id = #{cityId,jdbcType=INTEGER},
+                city_id = #{cityId,jdbcType=VARCHAR},
             </if>
             <if test="status != null">
                 status = #{status,jdbcType=VARCHAR},
@@ -276,15 +286,67 @@
     </update>
     <update id="updateByPrimaryKey" parameterType="com.baiying.hu.entity.User">
     update t_davince_user
-    set username = #{username,jdbcType=VARCHAR},
+    set username = #{realName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},
       created_at = #{createdAt,jdbcType=TIMESTAMP},
       updated_at = #{updatedAt,jdbcType=TIMESTAMP},
       phone = #{phone,jdbcType=BIGINT},
       nick_name = #{nickName,jdbcType=VARCHAR},
-      city_id = #{cityId,jdbcType=INTEGER},
+      city_id = #{cityId,jdbcType=VARCHAR},
       status = #{status,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
+    <update id="userCompanyRegister" parameterType="com.baiying.hu.entity.dto.UserRegisterDto">
+        UPDATE t_davince_user
+        SET
+        <if test="realName!=null and realName!=''">
+            real_name = #{realName},
+        </if>
+        <if test="companyName!=null and companyName!=''">
+            company_name = #{company_name},
+        </if>
+        <if test="idCard!=null and idCard!=''">
+            id_card = #{idCard},
+        </if>
+        <if test="idCardPhoto!=null and idCardPhoto!=''">
+            id_card_photo = #{idCardPhoto},
+        </if>
+        <if test="businessId!=null and businessId!=''">
+            business_id = #{businessId},
+        </if>
+        <if test="serviceProvider!=null and serviceProvider!=''">
+            service_provider = #{serviceProvider},
+        </if>
+        <if test="businessLicensePhoto!=null and businessLicensePhoto!=''">
+            business_license_photo = #{businessLicensePhoto},
+        </if>
+        WHERE id = #{id}
+    </update>
+    <select id="getServiceList" resultType="map">
+        SELECT id,
+              real_name as realName,
+              company_name as companyName
+        FROM t_davince_user
+        WHERE service_provider = 1
+              AND status = 'effect';
+    </select>
+    <update id="authorServiceProvider" parameterType="map">
+        UPDATE t_davince_user
+        <set>
+            <if test="status!=null">
+                status = #{status},
+            </if>
+            <if test="serviceProvider!=null">
+                service_provider = #{serviceProvider},
+
+            </if>
+            <if test="authorCompany!=null">
+                company_authenticate = #{authorCompany}
+            </if>
+
+        </set>
+        WHERE id = #{id}
+    </update>
+
 </mapper>

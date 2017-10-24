@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiying.hu.mapper.ProblemOperatorMapper">
+    <resultMap id="BaseResultMap" type="com.baiying.hu.entity.ProblemOperator">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="problem_id" property="problemId" jdbcType="BIGINT"/>
+        <result column="visit_count" property="visitCount" jdbcType="BIGINT"/>
+        <result column="news_count" property="newsCount" jdbcType="BIGINT"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, problem_id, visit_count, news_count, created_at, updated_at
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baiying.hu.entity.ProblemOperatorExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_davince_operator
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_davince_operator
+        where problem_id = #{problemId,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_davince_operator
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.baiying.hu.entity.ProblemOperatorExample">
+        delete from t_davince_operator
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.baiying.hu.entity.ProblemOperator">
+    insert into t_davince_operator (problem_id, visit_count,
+      news_count
+      )
+    values (#{problemId,jdbcType=BIGINT}, #{visitCount,jdbcType=BIGINT},
+      #{newsCount,jdbcType=BIGINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.baiying.hu.entity.ProblemOperator">
+        insert into t_davince_operator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="problemId != null">
+                problem_id,
+            </if>
+            <if test="visitCount != null">
+                visit_count,
+            </if>
+            <if test="newsCount != null">
+                news_count,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="problemId != null">
+                #{problemId,jdbcType=BIGINT},
+            </if>
+            <if test="visitCount != null">
+                #{visitCount,jdbcType=BIGINT},
+            </if>
+            <if test="newsCount != null">
+                #{newsCount,jdbcType=BIGINT},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.baiying.hu.entity.ProblemOperatorExample"
+            resultType="java.lang.Integer">
+        select count(*) from t_davince_operator
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_davince_operator
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.problemId != null">
+                problem_id = #{record.problemId,jdbcType=BIGINT},
+            </if>
+            <if test="record.visitCount != null">
+                visit_count = #{record.visitCount,jdbcType=BIGINT},
+            </if>
+            <if test="record.newsCount != null">
+                news_count = #{record.newsCount,jdbcType=BIGINT},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_davince_operator
+        set id = #{record.id,jdbcType=BIGINT},
+        problem_id = #{record.problemId,jdbcType=BIGINT},
+        visit_count = #{record.visitCount,jdbcType=BIGINT},
+        news_count = #{record.newsCount,jdbcType=BIGINT},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.baiying.hu.entity.ProblemOperator">
+        update t_davince_operator
+        <set>
+            <if test="problemId != null">
+                problem_id = #{problemId,jdbcType=BIGINT},
+            </if>
+            <if test="visitCount != null">
+                visit_count = #{visitCount,jdbcType=BIGINT},
+            </if>
+            <if test="newsCount != null">
+                news_count = #{newsCount,jdbcType=BIGINT},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.baiying.hu.entity.ProblemOperator">
+        UPDATE t_davince_operator
+        <set>
+            <if test="visitCount != null and visitCount!= 0">
+                visit_count = visit_count+1,
+            </if>
+            <if test="newsCount != null and newsCount!= 0">
+                news_count = news_count+1,
+            </if>
+        </set>
+        WHERE problem_id = #{problemId,jdbcType=BIGINT}
+    </update>
+</mapper>

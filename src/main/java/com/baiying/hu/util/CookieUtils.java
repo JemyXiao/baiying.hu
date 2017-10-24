@@ -88,10 +88,20 @@ public class CookieUtils {
 
     public static String getCookieValue(HttpServletRequest request, String key) {
 //        Cookie[] cookies = request.getCookies();
-        String token =  request.getHeader("COFFEE_TOKEN");
+        String token = request.getHeader("COFFEE_TOKEN");
         if (!StringUtils.isEmpty(token)) {
             return token;
-        }else {
+        } else {
+            return "";
+        }
+    }
+
+    public static String getAdminCookieValue(HttpServletRequest request, String key) {
+//        Cookie[] cookies = request.getCookies();
+        String token = request.getHeader("ADMIN_TOKEN");
+        if (!StringUtils.isEmpty(token)) {
+            return token;
+        } else {
             return "";
         }
     }
@@ -115,7 +125,18 @@ public class CookieUtils {
     public static void setTokenToCookie(HttpServletResponse response, String token) {
 //        Cookie cookie = new Cookie("COFFEE_TOKEN", token);
 //        cookie.setMaxAge(1800);
-        response.setHeader("COFFEE_TOKEN",token);
+        response.setHeader("COFFEE_TOKEN", token);
+        try {
+            response.flushBuffer();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void setAdminTokenToCookie(HttpServletResponse response, String token) {
+//        Cookie cookie = new Cookie("COFFEE_TOKEN", token);
+//        cookie.setMaxAge(1800);
+        response.setHeader("ADMIN_TOKEN", token);
         try {
             response.flushBuffer();
         } catch (IOException e) {

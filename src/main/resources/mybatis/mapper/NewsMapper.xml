@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiying.hu.mapper.NewsMapper">
+    <resultMap id="BaseResultMap" type="com.baiying.hu.entity.News">
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="problew_id" property="problemId" jdbcType="BIGINT"/>
+        <result column="news_content" property="newsContent" jdbcType="VARCHAR"/>
+        <result column="reply_id" property="replyId" jdbcType="BIGINT"/>
+        <result column="reply_name" property="replyName" jdbcType="VARCHAR"/>
+        <result column="created_at" property="createdAt" jdbcType="TIMESTAMP"/>
+        <result column="updated_at" property="updatedAt" jdbcType="TIMESTAMP"/>
+        <result column="status" property="status" jdbcType="TINYINT"/>
+    </resultMap>
+    <sql id="Example_Where_Clause">
+        <where>
+            <foreach collection="oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Update_By_Example_Where_Clause">
+        <where>
+            <foreach collection="example.oredCriteria" item="criteria" separator="or">
+                <if test="criteria.valid">
+                    <trim prefix="(" suffix=")" prefixOverrides="and">
+                        <foreach collection="criteria.criteria" item="criterion">
+                            <choose>
+                                <when test="criterion.noValue">
+                                    and ${criterion.condition}
+                                </when>
+                                <when test="criterion.singleValue">
+                                    and ${criterion.condition} #{criterion.value}
+                                </when>
+                                <when test="criterion.betweenValue">
+                                    and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                                </when>
+                                <when test="criterion.listValue">
+                                    and ${criterion.condition}
+                                    <foreach collection="criterion.value" item="listItem" open="(" close=")"
+                                             separator=",">
+                                        #{listItem}
+                                    </foreach>
+                                </when>
+                            </choose>
+                        </foreach>
+                    </trim>
+                </if>
+            </foreach>
+        </where>
+    </sql>
+    <sql id="Base_Column_List">
+    id, problem_id, news_content, reply_id, reply_name, created_at, updated_at, status
+  </sql>
+    <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.baiying.hu.entity.NewsExample">
+        select
+        <if test="distinct">
+            distinct
+        </if>
+        <include refid="Base_Column_List"/>
+        from t_davince_news
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+        <if test="orderByClause != null">
+            order by ${orderByClause}
+        </if>
+    </select>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long">
+        select
+        <include refid="Base_Column_List"/>
+        from t_davince_news
+        where id = #{id,jdbcType=BIGINT}
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from t_davince_news
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+    <delete id="deleteByExample" parameterType="com.baiying.hu.entity.NewsExample">
+        delete from t_davince_news
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </delete>
+    <insert id="insert" parameterType="com.baiying.hu.entity.News">
+    insert into t_davince_news (problem_id, news_content,
+      reply_id, reply_name,consultant_id,consultant_name,news_type, status)
+    values (#{problemId,jdbcType=BIGINT}, #{newsContent,jdbcType=VARCHAR},
+      #{replyId,jdbcType=BIGINT}, #{replyName,jdbcType=VARCHAR}, #{consultantId,jdbcType=BIGINT},
+      #{consultantName,jdbcType=VARCHAR},#{newsType,jdbcType=TINYINT},
+       #{status,jdbcType=TINYINT})
+  </insert>
+    <insert id="insertSelective" parameterType="com.baiying.hu.entity.News">
+        insert into t_davince_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="problemId != null">
+                problem_id,
+            </if>
+            <if test="newsContent != null">
+                news_content,
+            </if>
+            <if test="replyId != null">
+                reply_id,
+            </if>
+            <if test="replyName != null">
+                reply_name,
+            </if>
+            <if test="createdAt != null">
+                created_at,
+            </if>
+            <if test="updatedAt != null">
+                updated_at,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=BIGINT},
+            </if>
+            <if test="problemId != null">
+                #{problemId,jdbcType=BIGINT},
+            </if>
+            <if test="newsContent != null">
+                #{newsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="replyId != null">
+                #{replyId,jdbcType=BIGINT},
+            </if>
+            <if test="replyName != null">
+                #{replyName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+    <select id="countByExample" parameterType="com.baiying.hu.entity.NewsExample" resultType="java.lang.Integer">
+        select count(*) from t_davince_news
+        <if test="_parameter != null">
+            <include refid="Example_Where_Clause"/>
+        </if>
+    </select>
+    <update id="updateByExampleSelective" parameterType="map">
+        update t_davince_news
+        <set>
+            <if test="record.id != null">
+                id = #{record.id,jdbcType=BIGINT},
+            </if>
+            <if test="record.problemId != null">
+                problem_id = #{record.problemId,jdbcType=BIGINT},
+            </if>
+            <if test="record.newsContent != null">
+                news_content = #{record.newsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="record.replyId != null">
+                reply_id = #{record.replyId,jdbcType=BIGINT},
+            </if>
+            <if test="record.replyName != null">
+                reply_name = #{record.replyName,jdbcType=VARCHAR},
+            </if>
+            <if test="record.createdAt != null">
+                created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.updatedAt != null">
+                updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="record.status != null">
+                status = #{record.status,jdbcType=TINYINT},
+            </if>
+        </set>
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByExample" parameterType="map">
+        update t_davince_news
+        set id = #{record.id,jdbcType=BIGINT},
+        problem_id = #{record.problemId,jdbcType=BIGINT},
+        news_content = #{record.newsContent,jdbcType=VARCHAR},
+        reply_id = #{record.replyId,jdbcType=BIGINT},
+        reply_name = #{record.replyName,jdbcType=VARCHAR},
+        created_at = #{record.createdAt,jdbcType=TIMESTAMP},
+        updated_at = #{record.updatedAt,jdbcType=TIMESTAMP},
+        status = #{record.status,jdbcType=TINYINT}
+        <if test="_parameter != null">
+            <include refid="Update_By_Example_Where_Clause"/>
+        </if>
+    </update>
+    <update id="updateByPrimaryKeySelective" parameterType="com.baiying.hu.entity.News">
+        update t_davince_news
+        <set>
+            <if test="problemId != null">
+                problem_id = #{problemId,jdbcType=BIGINT},
+            </if>
+            <if test="newsContent != null">
+                news_content = #{newsContent,jdbcType=VARCHAR},
+            </if>
+            <if test="replyId != null">
+                reply_id = #{replyId,jdbcType=BIGINT},
+            </if>
+            <if test="replyName != null">
+                reply_name = #{replyName,jdbcType=VARCHAR},
+            </if>
+            <if test="createdAt != null">
+                created_at = #{createdAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updatedAt != null">
+                updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+            </if>
+            <if test="status != null">
+                status = #{status,jdbcType=TINYINT},
+            </if>
+        </set>
+        where id = #{id,jdbcType=BIGINT}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.baiying.hu.entity.News">
+    update t_davince_news
+    set problem_id = #{problemId,jdbcType=BIGINT},
+      news_content = #{newsContent,jdbcType=VARCHAR},
+      reply_id = #{replyId,jdbcType=BIGINT},
+      reply_name = #{replyName,jdbcType=VARCHAR},
+      created_at = #{createdAt,jdbcType=TIMESTAMP},
+      updated_at = #{updatedAt,jdbcType=TIMESTAMP},
+      status = #{status,jdbcType=TINYINT}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

@@ -46,8 +46,16 @@
         <!--<table tableName="t_recruit_works_case" domainObjectName="RecruitMasterWorkCase">-->
 
         <!--</table>-->
-        <table tableName="t_davince_user" domainObjectName="User">
+        <table tableName="t_davince_operator" domainObjectName="ProblemOperator">
         </table>
+        <!--<table tableName="t_davince_project" domainObjectName="Project">-->
+        <!--</table>-->
+        <!--<table tableName="t_davince_consultant" domainObjectName="Consultant">-->
+        <!--</table>-->
+        <!--<table tableName="t_davince_problem" domainObjectName="Problem">-->
+        <!--</table>-->
+        <!--<table tableName="t_davince_news" domainObjectName="News">-->
+        <!--</table>-->
         <!--<table tableName="t_recruit_master_work_mapping" domainObjectName="RecruitMasterWorkMapping">-->
 
         <!--</table>-->

@@ -635,52 +635,52 @@ public class UserExample {
             return (Criteria) this;
         }
 
-        public Criteria andCityIdEqualTo(Integer value) {
+        public Criteria andCityIdEqualTo(String value) {
             addCriterion("city_id =", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdNotEqualTo(Integer value) {
+        public Criteria andCityIdNotEqualTo(String value) {
             addCriterion("city_id <>", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdGreaterThan(Integer value) {
+        public Criteria andCityIdGreaterThan(String value) {
             addCriterion("city_id >", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdGreaterThanOrEqualTo(Integer value) {
+        public Criteria andCityIdGreaterThanOrEqualTo(String value) {
             addCriterion("city_id >=", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdLessThan(Integer value) {
+        public Criteria andCityIdLessThan(String value) {
             addCriterion("city_id <", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdLessThanOrEqualTo(Integer value) {
+        public Criteria andCityIdLessThanOrEqualTo(String value) {
             addCriterion("city_id <=", value, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdIn(List<Integer> values) {
+        public Criteria andCityIdIn(List<String> values) {
             addCriterion("city_id in", values, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdNotIn(List<Integer> values) {
+        public Criteria andCityIdNotIn(List<String> values) {
             addCriterion("city_id not in", values, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdBetween(Integer value1, Integer value2) {
+        public Criteria andCityIdBetween(String value1, String value2) {
             addCriterion("city_id between", value1, value2, "cityId");
             return (Criteria) this;
         }
 
-        public Criteria andCityIdNotBetween(Integer value1, Integer value2) {
+        public Criteria andCityIdNotBetween(String value1, String value2) {
             addCriterion("city_id not between", value1, value2, "cityId");
             return (Criteria) this;
         }
