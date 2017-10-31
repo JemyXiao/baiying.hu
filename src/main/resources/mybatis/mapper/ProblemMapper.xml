@@ -89,9 +89,9 @@
     created_at, updated_at, status
   </sql>
     <select id="selectProblemDetail" resultMap="ResultDataMap" parameterType="long">
-     SELECT pro.id as id, pro.business_id AS business_id,pro.created_at as created_at,
-     pro.problem_title as problem_title,pro.problem_detail AS problem_detail,
-     usr.nick_name as create_name,
+     SELECT pro.id as id, pro.business_id AS business_id,pro.created_at as created_at,pro.updated_at AS created_at,
+     pro.problem_title as problem_title,pro.problem_detail AS problem_detail,pro.consultant_id AS consultant_id,
+     pro.status as status,usr.nick_name as create_name,usr.create_id AS createId,
      news.id as news_id,news.news_content as news_content,news.reply_id as reply_id,news.news_type as news_type,news.reply_name as reply_name,
      consu.actual_name as consultant_name,news.created_at as news_created_at,consu.created_at as created_at
      FROM t_davince_problem pro

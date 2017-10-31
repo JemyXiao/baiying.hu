@@ -195,6 +195,7 @@ public class UserController {
     public ResultModel companyAuthenticate(@RequestBody UserRegisterDto dto, HttpServletRequest request) {
         User user = userService.selectUserInfo(request);
         dto.setId(user.getId());
+        dto.setCompanyAuthenticate(1);
         userService.companyRegister(dto);
         return new ResultModel(200, Constant.OPERATION_OK);
     }
@@ -207,6 +208,7 @@ public class UserController {
     public ResultModel serviceAuthenticate(@RequestBody UserRegisterDto dto, HttpServletRequest request) {
         User user = userService.selectUserInfo(request);
         dto.setId(user.getId());
+        dto.setServiceProvider(1);
         userService.companyRegister(dto);
         return new ResultModel(200, Constant.OPERATION_OK);
     }

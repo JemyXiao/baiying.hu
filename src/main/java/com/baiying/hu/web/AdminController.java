@@ -314,8 +314,8 @@ public class AdminController {
     @ApiOperation(value = "服务列表", notes = "服务列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, response = Business.class
     )
     @GetMapping("/queryBusinessList")
-    public ResultModel queryBusinessList(@RequestParam int pageSize, int pageNumber) {
-        PageInfo pageInfo = PageHelper.startPage(pageNumber, pageSize).doSelectPageInfo(() -> businessService.queryAllBusiness());
+    public ResultModel queryBusinessList(@RequestParam(value = "name", required = false) int pageSize, int pageNumber, String name) {
+        PageInfo pageInfo = PageHelper.startPage(pageNumber, pageSize).doSelectPageInfo(() -> businessService.queryAllBusiness(name));
         Map<String, Object> mapResult = new LinkedHashMap<>();
         mapResult.put("rows", pageInfo.getList());
         mapResult.put("total", pageInfo.getTotal());
@@ -464,8 +464,12 @@ public class AdminController {
     @ApiOperation(value = "服务搜索列表", notes = "服务搜索列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, response = Business.class
     )
     @GetMapping("/searchBusinessByName")
-    public ResultModel searchBusinessByName(@ApiParam @RequestParam(required = false) String name) {
-        return new ResultModel(200, businessService.queryBusinessByName(name));
+    public ResultModel searchBusinessByName(@ApiParam @RequestParam(required = false) String name, int pageSize, int pageNumber) {
+        PageInfo pageInfo = PageHelper.startPage(pageNumber, pageSize).doSelectPageInfo(() -> businessService.queryBusinessByName(name));
+        Map<String, Object> mapResult = new LinkedHashMap<>();
+        mapResult.put("rows", pageInfo.getList());
+        mapResult.put("total", pageInfo.getTotal());
+        return new ResultModel(200, mapResult);
     }
 
 }

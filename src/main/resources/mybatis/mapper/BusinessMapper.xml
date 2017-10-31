@@ -298,7 +298,7 @@
     where id = #{id,jdbcType=BIGINT}
   </update>
     <select id="queryBusinessByName" parameterType="string" resultType="com.baiying.hu.entity.Business">
-        SELECT child.id AS id,child.business_name AS businessName,child.business_code AS businessCode,
+        SELECT child.id AS id,child.parent_id AS parentId, child.business_name AS businessName,child.business_code AS businessCode,
         child.business_image AS businessImage,child.business_detail AS businessDetail,
         child.business_title AS businessTitle
         FROM t_davince_business child

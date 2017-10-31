@@ -9,8 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Created by jmx
@@ -27,8 +26,12 @@ public class BusinessServiceImpl implements BusinessService {
     }
 
     @Override
-    public List<Business> queryAllBusiness() {
-        List<Business> dataList = businessMapper.selectByExample(new BusinessExample());
+    public List<Business> queryAllBusiness(String name) {
+        BusinessExample example = new BusinessExample();
+        if (!StringUtils.isEmpty(name)) {
+            example.createCriteria().andBusinessNameLike("%" + name + "%");
+        }
+        List<Business> dataList = businessMapper.selectByExample(example);
         return getChildren(dataList, 0);
     }
 
@@ -64,7 +67,35 @@ public class BusinessServiceImpl implements BusinessService {
 
     @Override
     public List<Business> queryBusinessByName(String name) {
-        return businessMapper.queryBusinessByName(name);
+        //查询第三级列表
+        List<Business> businessList = businessMapper.queryBusinessByName(name);
+        List<Business> parent1 = resultBusiness(businessList);
+        List<Business> newBusiness = resultBusiness(parent1);
+        return newBusiness;
+
+    }
+
+    private List<Business> resultBusiness(List<Business> businessList) {
+        Map<Long, List<Business>> map = new HashMap<>();
+        List<Business> businesses;
+        List<Business> result = Lists.newArrayList();
+        for (Business business : businessList) {
+            Business parent = businessMapper.selectByPrimaryKey(business.getParentId());
+            if (map.get(parent.getId()) == null) {
+                businesses = Lists.newArrayList();
+                businesses.add(business);
+                map.put(parent.getId(), businesses);
+            } else {
+                map.get(parent.getId()).add(business);
+            }
+
+        }
+        for (Map.Entry<Long, List<Business>> entry : map.entrySet()) {
+            Business business = businessMapper.selectByPrimaryKey(entry.getKey());
+            business.setChildren(entry.getValue());
+            result.add(business);
+        }
+        return result;
     }
 
     // 递归获取字节点

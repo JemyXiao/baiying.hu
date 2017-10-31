@@ -21,16 +21,6 @@
             <fileNamePattern>logs/${APP_ID}/access.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
-        <!--<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">-->
-        <!--<fileNamePattern>logs/${APP_ID}/access.%d{yyyy-MM-dd}.log.gz</fileNamePattern>-->
-        <!--<maxHistory>7</maxHistory>-->
-        <!--</rollingPolicy>-->
-        <!--<encoder>-->
-        <!--<pattern>-->
-        <!--[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n-->
-        <!--</pattern>-->
-        <!--<charset>UTF-8</charset> &lt;!&ndash; 此处设置字符集 &ndash;&gt;-->
-        <!--</encoder>-->
     </appender>
     <root level="INFO">
         <appender-ref ref="FILE"/>

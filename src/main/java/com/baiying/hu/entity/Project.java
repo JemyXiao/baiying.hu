@@ -47,4 +47,8 @@ public class Project {
     private String consultantName;
 
     private Long serviceId;
+    //服务商商公司名称
+    private String serviceCompanyName;
+    //发布者名称
+    private String publisherName;
 }

@@ -19,8 +19,6 @@ public class ProblemResult {
     private Long id;
     @ApiModelProperty(value = "服务类型")
     private String businessId;
-    @ApiModelProperty(value = "问题类型")
-    private String problemType;
     @ApiModelProperty(value = "问题标题")
     private String problemTitle;
     @ApiModelProperty(value = "问题详情")

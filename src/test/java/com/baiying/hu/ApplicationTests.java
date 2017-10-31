@@ -24,10 +24,15 @@ public class ApplicationTests {
 
     @Test
     public void business() {
-        List<Business> businessList = businessService.queryAllBusiness();
+        List<Business> businessList = businessService.queryAllBusiness("工商记账");
         System.out.println(businessList);
         List<Business> resultBusiness = getChildren(businessList, 0L);
         System.out.println(resultBusiness);
+    }
+    @Test
+    public void business1() {
+        List<Business> businessList = businessService.queryBusinessByName("许可证");
+        System.out.println(businessList);
     }
 
     // 递归获取字节点

@@ -30,6 +30,9 @@ public class UserRegisterDto {
     @ApiModelProperty(value = "营业执照照片", required = true)
     private String businessLicensePhoto;
     private String status;
+    private Integer serviceProvider;
+    @ApiModelProperty(value = "是否申请企业认证")
+    private Integer companyAuthenticate;
 
     //添加公司名称，服务类型，真实姓名，身份证号，身份证照片字段
 }

@@ -1,5 +1,6 @@
 package com.baiying.hu.web;
 
+import ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP;
 import com.baiying.hu.entity.Business;
 import com.baiying.hu.entity.ResultModel;
 import com.baiying.hu.service.BusinessService;
@@ -35,8 +36,8 @@ public class BusinessController {
     )
     @ApiResponse(code = 200, message = "Invalid user supplied", response = Business.class)
     @GetMapping("/getAll")
-    public ResultModel getAllBusiness() {
-        return new ResultModel(200, businessService.queryAllBusiness());
+    public ResultModel getAllBusiness(@ApiParam @RequestParam(required = false) String name) {
+        return new ResultModel(200, businessService.queryAllBusiness(name));
     }
 
     @ApiOperation(value = "getBusinessById", notes = "获取服务列表", httpMethod = "GET", produces = MediaType.APPLICATION_JSON_UTF8_VALUE, response = Business.class

@@ -3,10 +3,12 @@ package com.baiying.hu.service.impl;
 import com.baiying.hu.config.Constant;
 import com.baiying.hu.entity.Project;
 import com.baiying.hu.entity.ProjectExample;
+import com.baiying.hu.entity.User;
 import com.baiying.hu.entity.dto.ProjectEditDto;
 import com.baiying.hu.entity.vo.ConsultantResult;
 import com.baiying.hu.mapper.ConsultantMapper;
 import com.baiying.hu.mapper.ProjectMapper;
+import com.baiying.hu.mapper.UserMapper;
 import com.baiying.hu.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,11 +24,13 @@ import java.util.Objects;
 public class ProjectServiceImpl implements ProjectService {
     private final ProjectMapper projectMapper;
     private final ConsultantMapper consultantMapper;
+    private final UserMapper userMapper;
 
     @Autowired
-    public ProjectServiceImpl(ProjectMapper projectMapper, ConsultantMapper consultantMapper) {
+    public ProjectServiceImpl(ProjectMapper projectMapper, ConsultantMapper consultantMapper, UserMapper userMapper) {
         this.projectMapper = projectMapper;
         this.consultantMapper = consultantMapper;
+        this.userMapper = userMapper;
     }
 
     @Override
@@ -46,6 +50,11 @@ public class ProjectServiceImpl implements ProjectService {
             if (!Objects.isNull(project.getConsultantId()) && project.getConsultantId() != 0) {
                 ConsultantResult consultantResult = consultantMapper.selectByPrimaryKey(project.getConsultantId());
                 project.setConsultantName(consultantResult.getActualName());
+            }
+            if (!Objects.isNull(project.getServiceId()) && project.getServiceId() != 0) {
+                User u = userMapper.selectByPrimaryKey(project.getServiceId());
+                project.setServiceCompanyName(u.getCompanyName());
+                project.setPublisherName(u.getRealName());
             }
         }
         return projects;

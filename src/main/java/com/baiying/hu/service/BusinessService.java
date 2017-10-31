@@ -10,7 +10,7 @@ import java.util.List;
  */
 public interface BusinessService {
 
-    List<Business> queryAllBusiness();
+    List<Business> queryAllBusiness(String name);
 
     Business getBusinessById(long id);
 
