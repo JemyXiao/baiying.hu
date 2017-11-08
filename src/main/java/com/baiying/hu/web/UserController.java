@@ -8,6 +8,7 @@ import com.baiying.hu.entity.*;
 import com.baiying.hu.entity.dto.UserLoginDto;
 import com.baiying.hu.entity.dto.UserRegisterDto;
 import com.baiying.hu.enums.LoginTypeEnum;
+import com.baiying.hu.enums.UserStatusEnum;
 import com.baiying.hu.mapper.CheckPhoneCodeMapper;
 import com.baiying.hu.redis.CommonRedisDao;
 import com.baiying.hu.service.ProblemService;
@@ -86,6 +87,7 @@ public class UserController {
         }
         flag.setIsUse(1);
         codeMapper.updateByPrimaryKey(flag);
+        user.setStatus(UserStatusEnum.EFFECT.getStatusType());
         userService.registerUser(user);
         return new ResultModel(200, JSON.toJSON(Constant.OPERATION_OK));
     }
