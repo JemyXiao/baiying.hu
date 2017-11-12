@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.baiying.hu.mapper.AlipayMapper">
+
+    <insert id="saveAliPay" parameterType="com.baiying.hu.entity.dto.AlipayDto">
+        INSERT INTO ali_trade_page_pay
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="productCode != null">
+                product_code,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="buyerId != null">
+                buyer_id,
+            </if>
+            <if test="sellerId != null">
+                seller_id,
+            </if>
+            <if test="tradeStatus != null">
+                trade_status,
+            </if>
+            <if test="action != null">
+                pay_action,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="productCode != null">
+                #{productCode,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="subject != null">
+                #{subject,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                #{sellerId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeStatus != null">
+                #{tradeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+    </insert>
+
+    <update id="updateAlipayByOutTradeNo" parameterType="com.baiying.hu.entity.dto.AlipayDto">
+        UPDATE ali_trade_page_pay
+        <set>
+            <if test="tradeNo != null">
+                trade_no = #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerId != null">
+                buyer_id = #{buyerId,jdbcType=VARCHAR},
+            </if>
+            <if test="sellerId != null">
+                seller_id = #{sellerId,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeStatus != null">
+                trade_status = #{tradeStatus,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                pay_action = #{action,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE out_trade_no = #{outTradeNo}
+    </update>
+
+    <insert id="saveAliTradeRefund" parameterType="com.baiying.hu.entity.dto.AliTradeRefundDto">
+        INSERT INTO ali_trade_refund
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="outTradeNo != null">
+                out_trade_no,
+            </if>
+            <if test="outRequestNo != null">
+                out_request_no,
+            </if>
+            <if test="tradeNo != null">
+                trade_no,
+            </if>
+            <if test="refundFee != null">
+                refund_fee,
+            </if>
+            <if test="totalAmount != null">
+                total_amount,
+            </if>
+            <if test="refundReason != null">
+                refund_reason,
+            </if>
+            <if test="fundChange != null">
+                fund_change,
+            </if>
+            <if test="gmtCreate != null">
+                gmt_create,
+            </if>
+            <if test="buyerUserId != null">
+                buyer_user_id,
+            </if>
+            <if test="buyerLogonId != null">
+                buyer_logon_id,
+            </if>
+            <if test="action != null">
+                pay_action,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="outTradeNo != null">
+                #{outTradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="outRequestNo != null">
+                #{outRequestNo,jdbcType=VARCHAR},
+            </if>
+            <if test="tradeNo != null">
+                #{tradeNo,jdbcType=VARCHAR},
+            </if>
+            <if test="refundFee != null">
+                #{refundFee,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                #{totalAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="refundReason != null">
+                #{refundReason,jdbcType=VARCHAR},
+            </if>
+            <if test="fundChange != null">
+                #{fundChange,jdbcType=VARCHAR},
+            </if>
+            <if test="gmtCreate != null">
+                #{gmtCreate,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerUserId != null">
+                #{buyerUserId,jdbcType=VARCHAR},
+            </if>
+            <if test="buyerLogonId != null">
+                #{buyerLogonId,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+    </insert>
+
+    <update id="updateAliTradeRefundByOutRequestNo" parameterType="com.baiying.hu.entity.dto.AliTradeRefundDto">
+        UPDATE ali_trade_refund
+        <set>
+            <if test="refundAmount != null">
+                refund_amount = #{refundAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="totalAmount != null">
+                total_amount = #{totalAmount,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                pay_action = #{action,jdbcType=VARCHAR},
+            </if>
+            <if test="code != null">
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE out_request_no = #{outRequestNo}
+    </update>
+
+    <insert id="saveAliFundTransfer" parameterType="com.baiying.hu.entity.dto.AliFundTransferDto">
+        INSERT INTO ali_trade_transfer
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                app_id,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="outBizNo != null">
+                out_biz_no,
+            </if>
+            <if test="payeeType != null">
+                payee_type,
+            </if>
+            <if test="payeeAccount != null">
+                payee_account,
+            </if>
+            <if test="amount != null">
+                amount,
+            </if>
+            <if test="payerShowName != null">
+                payer_show_name,
+            </if>
+            <if test="payeeRealName != null">
+                payee_real_name,
+            </if>
+            <if test="remark != null">
+                remark,
+            </if>
+            <if test="orderId != null">
+                order_id,
+            </if>
+            <if test="payDate != null">
+                pay_date,
+            </if>
+            <if test="status != null">
+                status,
+            </if>
+            <if test="arrivalTimeEnd != null">
+                arrival_time_end,
+            </if>
+            <if test="orderFee != null">
+                order_fee,
+            </if>
+            <if test="failReason != null">
+                fail_reason,
+            </if>
+            <if test="errorCode != null">
+                error_code,
+            </if>
+            <if test="action != null">
+                pay_action,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="appId != null">
+                #{appId,jdbcType=VARCHAR},
+            </if>
+            <if test="method != null">
+                #{method,jdbcType=VARCHAR},
+            </if>
+            <if test="outBizNo != null">
+                #{outBizNo,jdbcType=VARCHAR},
+            </if>
+            <if test="payeeType != null">
+                #{payeeType,jdbcType=VARCHAR},
+            </if>
+            <if test="payeeAccount != null">
+                #{payeeAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="amount != null">
+                #{amount,jdbcType=VARCHAR},
+            </if>
+            <if test="payerShowName != null">
+                #{payerShowName,jdbcType=VARCHAR},
+            </if>
+            <if test="payeeRealName != null">
+                #{payeeRealName,jdbcType=VARCHAR},
+            </if>
+            <if test="remark != null">
+                #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="orderId != null">
+                #{orderId,jdbcType=VARCHAR},
+            </if>
+            <if test="payDate != null">
+                #{payDate,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="arrivalTimeEnd != null">
+                #{arrivalTimeEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="orderFee != null">
+                #{orderFee,jdbcType=VARCHAR},
+            </if>
+            <if test="failReason != null">
+                #{failReason,jdbcType=VARCHAR},
+            </if>
+            <if test="errorCode != null">
+                #{errorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                #{action,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+    </insert>
+
+    <update id="updateAliFundTransferByOrderId" parameterType="com.baiying.hu.entity.dto.AliFundTransferDto">
+        UPDATE ali_trade_transfer
+        <set>
+            <if test="status != null">
+                status = #{status,jdbcType=VARCHAR},
+            </if>
+            <if test="arrivalTimeEnd != null">
+                arrival_time_end = #{arrivalTimeEnd,jdbcType=VARCHAR},
+            </if>
+            <if test="orderFee != null">
+                order_fee = #{orderFee,jdbcType=VARCHAR},
+            </if>
+            <if test="failReason != null">
+                fail_reason = #{failReason,jdbcType=VARCHAR},
+            </if>
+            <if test="errorCode != null">
+                error_code = #{errorCode,jdbcType=VARCHAR},
+            </if>
+            <if test="action != null">
+                pay_action = #{action,jdbcType=VARCHAR},
+            </if>
+        </set>
+        WHERE order_id = #{orderId}
+    </update>
+
+</mapper>
